@@ -1,3 +1,4 @@
+import numpy as np
 
 
 def get_dens(vol, mol_mass):
@@ -8,49 +9,47 @@ def get_dens(vol, mol_mass):
     return dens     # g/nm^3
 
 
-def read_thermo(dirs, delt_block=1, fin='thermo.out', jump_line=100):
+def proc_data(data, atom=None) -> dict[str, np.ndarray]:
 
-    data = load_thermo(filename=fin, directory=dirs)
-    try:
-        atom = read(f'{dirs}/model.xyz', format='extxyz')
-        natoms = atom.get_global_number_of_atoms()
-        data['Volume'] = data['Lx']*data['Ly']*data['Lz']/1000
-        data['Masses'] = np.array([np.sum(atom.get_masses())] * len(data['Volume']))
-        data['Density'] = get_dens(data['Volume'], data['Masses'])
-    except:
-        print(" WARNING: The necessary information is missing to obtain physical quantities related to system quality.")
-    data['Total_Energy'] = data['U'] + data['K']
+    if data['data_type'] == "thermo":
+        if atom != None:
+            data['Volume'] = data['Lx']*data['Ly']*data['Lz']/1000
+            data['Masses'] = np.array([np.sum(atom.get_masses())] * len(data['Volume']))
+            data['Density'] = get_dens(data['Volume'], data['Masses'])
+        data['Total_Energy'] = data['U'] + data['K']
+
+
+def mean_data(data, percent: float=[0.5, 1.0], delt_block: int=2, jump_line: int=0,
+              temp_list: str=None) -> dict[str, np.ndarray]:
+
     for ndir in data:
         data[ndir] = data[ndir][jump_line:]
 
-    # display keys of the data.
-    print("Keywords that can be used are printed below:")
-    print(data.keys())
+    if delt_block > 1:
+        db = delt_block
+        nb = round(len(data[list(data.keys())[0]])/db)
 
-    db = delt_block
-    nb = round(len(data['U'])/db)
+        temp_data = {}
+        for i in range(nb):
+            sta = i * db
+            end = (i+1) * db
+            if i == nb-1:
+                end = len(data[list(data.keys())[0]])
+            temp_data[i] = {}
+            for ks in data:
+                temp_data[i][ks] = data[ks][sta:end]
 
-    out_data = {}
-    for i in range(nb):
-        sta = i * db
-        end = (i+1) * db
-        if i == nb-1:
-            end = len(data['U'])
-        out_data[i] = {}
-        for ks in data:
-            out_data[i][ks] = data[ks][sta:end]
-
-    return out_data
-
-
-def get_ave_data(data):
     out_data = dict()
-    for ti in data:
+    if temp_list == None:
+        temp_list = temp_data[ti].keys()
+    for ti in temp_data:
         out_data[ti] = {}
-        for dn in data[ti].keys():
-            data_dn = data[ti][dn]
-            sta = int(len(data_dn)/2)
-            end = len(data_dn)
+        for dn in temp_list:
+            if dn == 'data_type': continue
+            data_dn = temp_data[ti][dn]
+            sta = int(len(data_dn)*percent[0])
+            end = int(len(data_dn)*percent[1])
             out_data[ti][dn] = np.mean(data_dn[sta:end])
             out_data[ti][f"{dn}_std"] = np.std(data_dn[sta:end])
+
     return out_data

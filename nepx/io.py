@@ -1,3 +1,10 @@
+from ase.io import read
+import os
+
+def read_xyz(filename: str = "model.xyz", directory: str = None):
+    fxyz = os.path.join(directory, filename)
+    atom = read(fxyz)
+    return atom
 
 def output_data(ave_data, plist=['temperature'], out_data=True):
     plot_data = {'num':[]}
