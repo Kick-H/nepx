@@ -1,7 +1,7 @@
 from ase.io import read
 import os
 
-def read_xyz(filename: str = "model.xyz", directory: str = None):
+def read_xyz(filename: str="model.xyz", directory: str=""):
     fxyz = os.path.join(directory, filename)
     atom = read(fxyz)
     return atom

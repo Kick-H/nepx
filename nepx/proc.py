@@ -19,8 +19,8 @@ def proc_data(data, atom=None) -> dict[str, np.ndarray]:
         data['Total_Energy'] = data['U'] + data['K']
 
 
-def mean_data(data, percent: float=[0.5, 1.0], delt_block: int=2, jump_line: int=0,
-              temp_list: str=None) -> dict[str, np.ndarray]:
+def mean_data(data, percent: float=[0.5, 1.0], delt_block: int=2,
+              jump_line: int=0, temp_list: str=None) -> dict[str, np.ndarray]:
 
     for ndir in data:
         data[ndir] = data[ndir][jump_line:]

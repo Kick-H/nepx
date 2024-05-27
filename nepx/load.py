@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-def load_thermo(filename: str = "thermo.out", directory: str = None) -> dict[str, np.ndarray]:
+def load_thermo(filename: str="thermo.out", directory: str="") -> dict[str, np.ndarray]:
     """
     Loads data from thermo.out GPUMD output file.
     Args:
