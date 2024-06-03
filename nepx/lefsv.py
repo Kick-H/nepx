@@ -19,14 +19,34 @@ def set_fig_properties(ax_list):
         ax.tick_params(which='both', axis='both', direction='out', right=False, top=False)
 
 
-def plot_nep(pout):
-    nep = np.loadtxt("./nep.txt", skiprows=6)
-    figure(figsize=(16, 7))
+def plot_nep(pout, fdir=".", label=""):
+    nep = np.loadtxt(os.path.join(fdir,'nep.txt'), skiprows=6)
+    figure(figsize=(9,3))
     subplot(1,2,1)
-    hist(np.log(np.abs(nep)), bins=50)
+    hist(np.log(np.abs(nep)), bins=50, label=label)
+    if label != "": legend()
     subplot(1,2,2)
     scatter(range(len(nep)), nep, s=0.5)
-    gcf().set_size_inches(9,3)
+    savefig(pout, dpi=300)
+
+
+def plot_restart(pout, fdir=".", label=""):
+    nep = np.loadtxt(os.path.join(fdir,'nep.restart'), skiprows=6)
+    restart = np.loadtxt("./nep.restart")
+    norm_rs = np.linalg.norm(restart, axis=0)
+    figure(figsize=(9,8))
+    subplot(2,2,1)
+    hist(np.log(np.abs(restart[:,0])), bins=50, label=label)
+    if label != "": legend()
+    subplot(2,2,2)
+    scatter(range(len(restart[:,0])), restart[:,0], s=0.5, label=f"norm={norm_rs[0]:3.3f}")
+    legend()
+    subplot(2,2,3)
+    hist(np.log(np.abs(restart[:,1])), bins=50, label=label)
+    if label != "": legend()
+    subplot(2,2,4)
+    scatter(range(len(restart[:,1])), restart[:,1], s=0.5, label=f"norm={norm_rs[1]:3.3f}")
+    legend()
     savefig(pout, dpi=300)
 
 
