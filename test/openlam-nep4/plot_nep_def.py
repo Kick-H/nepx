@@ -1,6 +1,7 @@
 import numpy as np
 from pylab import *
-import os
+import sys
+
 
 ##set figure properties
 aw = 1.5
@@ -19,34 +20,14 @@ def set_fig_properties(ax_list):
         ax.tick_params(which='both', axis='both', direction='out', right=False, top=False)
 
 
-def plot_nep(pout, fdir=".", label=""):
-    nep = np.loadtxt(os.path.join(fdir,'nep.txt'), skiprows=6)
-    figure(figsize=(9,3))
+def plot_nep(pout):
+    nep = np.loadtxt("./nep.txt", skiprows=6)
+    figure(figsize=(16, 7))
     subplot(1,2,1)
-    hist(np.log(np.abs(nep)), bins=50, label=label)
-    if label != "": legend()
+    hist(np.log(np.abs(nep)), bins=50)
     subplot(1,2,2)
     scatter(range(len(nep)), nep, s=0.5)
-    savefig(pout, dpi=300)
-
-
-def plot_restart(pout, fdir=".", label=""):
-    nep = np.loadtxt(os.path.join(fdir,'nep.restart'), skiprows=6)
-    restart = np.loadtxt("./nep.restart")
-    norm_rs = np.linalg.norm(restart, axis=0)
-    figure(figsize=(9,8))
-    subplot(2,2,1)
-    hist(np.log(np.abs(restart[:,0])), bins=50, label=label)
-    if label != "": legend()
-    subplot(2,2,2)
-    scatter(range(len(restart[:,0])), restart[:,0], s=0.5, label=f"norm={norm_rs[0]:3.3f}")
-    legend()
-    subplot(2,2,3)
-    hist(np.log(np.abs(restart[:,1])), bins=50, label=label)
-    if label != "": legend()
-    subplot(2,2,4)
-    scatter(range(len(restart[:,1])), restart[:,1], s=0.5, label=f"norm={norm_rs[1]:3.3f}")
-    legend()
+    gcf().set_size_inches(9,3)
     savefig(pout, dpi=300)
 
 
@@ -71,13 +52,13 @@ def find_units(name):
     elif name == "stress": return ['GPa', 'MPa', 5]
 
 
-def plot_nep_dft(data, title, print_rmse=True):
+def plot_nep_dft(data, title):
     # title = [name, type, units]
     # example: title = ['force', 'eV/A/atom', 'train']
     nclo = int(data.shape[1]/2)
     targe = data[:, :nclo].reshape(-1)
     predi = data[:, nclo:].reshape(-1)
-    pids = np.abs(targe - predi) < 10
+    pids = np.abs(targe - predi) < 1e4
     if np.sum(pids) != len(targe):
         print(f"WARNING: There are {len(targe)-np.sum(pids)} frams mismatch in {title[0]} {title[1]}")
     targe = targe[pids]
@@ -132,27 +113,27 @@ def plot_nep_nep(data_train, data_test, title):
     # tight_layout()
 
 
-def plot_out(plot_model, plot_dir="./", out_name="nep_out.png", print_rmse=True):
+def plot_out(plot_model, out_name="nep_out.png"):
 
     nep_out_files = ['loss.out',
                      'energy_train.out', 'energy_test.out',
                      'force_train.out',  'force_test.out']
-
-    if   os.path.exists(os.path.join(plot_dir,'stress_train.out')):
+    try:
+        open('stress_train.out', 'r')
         nep_out_files += ['stress_train.out', 'stress_test.out']
         stress_flag = 1
-    elif os.path.exists(os.path.join(plot_dir,'virial_train.out')):
+    except FileNotFoundError:
         nep_out_files += ['virial_train.out', 'virial_test.out']
         print('WARNING: There is no stress file, use the virial file.')
         stress_flag = 0
-    else:
+    except:
         print('WARNING: There is no virial and stress files.')
         stress_flag = -1
 
     data_list = {}
     for file in nep_out_files:
         try:
-            data_list[file] = np.loadtxt(os.path.join(plot_dir,file))
+            data_list[file] = np.loadtxt(file)
         except:
             data_list[file] = None
 
@@ -180,13 +161,13 @@ def plot_out(plot_model, plot_dir="./", out_name="nep_out.png", print_rmse=True)
             if plot_data[file_train_ids] == 1:  # plot_train
                 file_name = nep_out_files[file_train_ids]
                 title = file_name.split('.')[0].split('_')
-                plot_nep_dft(data_list[file_name], title, print_rmse=print_rmse)
+                plot_nep_dft(data_list[file_name], title)
 
             file_test_ids = 2+2*i
             if plot_data[file_test_ids] == 1:  # plot_test
                 file_name = nep_out_files[file_test_ids]
                 title = file_name.split('.')[0].split('_')
-                plot_nep_dft(data_list[file_name], title, print_rmse=print_rmse)
+                plot_nep_dft(data_list[file_name], title)
 
     elif plot_sum in [3]:
 
@@ -198,13 +179,13 @@ def plot_out(plot_model, plot_dir="./", out_name="nep_out.png", print_rmse=True)
             if plot_data[file_train_ids] == 1:
                 file_name = nep_out_files[file_train_ids]
                 title = file_name.split('.')[0].split('_')
-                plot_nep_dft(data_list[file_name], title, print_rmse=print_rmse)
+                plot_nep_dft(data_list[file_name], title)
 
             file_test_ids = 2+2*i
             if plot_data[file_test_ids] == 1:
                 file_name = nep_out_files[file_test_ids]
                 title = file_name.split('.')[0].split('_')
-                plot_nep_dft(data_list[file_name], title, print_rmse=print_rmse)
+                plot_nep_dft(data_list[file_name], title)
 
     elif plot_sum in [6]:
 
@@ -229,14 +210,11 @@ def plot_out(plot_model, plot_dir="./", out_name="nep_out.png", print_rmse=True)
     # plot_model = 4 # 4, predict: test
     # plot_model = 5 # 5, compare: train_nep:test_nep
 
+name_list = ["nep_train.png", "nep_test.png", "nep_train_test.png", "train.png", "test.png", "compare.png"]
 
-if __name__ == "__main__":
-    import sys
+plot_model = int(sys.argv[1])
+print_rmse = True
 
-    name_list = ["nep_train.png", "nep_test.png", "nep_train_test.png", "train.png", "test.png", "compare.png"]
-
-    plot_model = int(sys.argv[1])
-
-    plot_out(plot_model, plot_dir="./", out_name=name_list[plot_model], print_rmse=True)
-    if plot_model in [0, 1, 2]:
-        plot_nep("nep_txt.png")
+plot_out(plot_model, out_name=name_list[plot_model])
+if plot_model in [0, 1, 2]:
+    plot_nep("nep_txt.png")

@@ -1,0 +1,16 @@
+type       15 Li B O Al Si P S Cl Ga Ge As Br Sn Sb I
+version    4
+cutoff     7 5
+n_max      6 4
+basis_size 8 8
+l_max      4 0 0
+neuron     30
+#lambda_1  0
+#lambda_2  0.2
+lambda_e   0.2
+lambda_f   1
+lambda_v   0.1
+batch      2000
+population 60
+generation 1000000
+prediction 1
