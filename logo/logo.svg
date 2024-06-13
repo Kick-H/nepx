@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="31.739305mm"
+   height="31.739305mm"
+   viewBox="0 0 31.739305 31.739305"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="logo.png"
+   inkscape:export-xdpi="256"
+   inkscape:export-ydpi="256"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="31.608889"
+     inkscape:cx="117.35623"
+     inkscape:cy="9.0006328"
+     inkscape:window-width="2560"
+     inkscape:window-height="1490"
+     inkscape:window-x="1609"
+     inkscape:window-y="250"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:export-bgcolor="#ffffffff" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient2"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+      <stop
+         style="stop-color:#7bfb00;stop-opacity:0.48235294;"
+         offset="0.51490515"
+         id="stop4" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop3" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2"
+       id="radialGradient3"
+       cx="125.78766"
+       cy="62.148052"
+       fx="125.78766"
+       fy="62.148052"
+       r="6.3813748"
+       gradientTransform="matrix(1,0,0,1.0907738,0,-5.6414154)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <g
+     inkscape:label="图层 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-109.91801,-46.278401)">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.666;stroke-linejoin:miter;stroke-dasharray:none;stroke-linecap:round"
+       id="rect1"
+       width="31.073305"
+       height="31.073305"
+       x="110.25101"
+       y="46.611401" />
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:19.7556px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.831426;stroke-linejoin:round;stroke-dasharray:none"
+       x="125.80665"
+       y="69.108688"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-weight:normal;font-size:19.7556px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.831426;stroke-dasharray:none"
+         x="125.80665"
+         y="69.108688">X</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:4.23333px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.159225;stroke-linejoin:round;stroke-dasharray:none"
+       x="125.75685"
+       y="75.209412"
+       id="text1-1"><tspan
+         sodipodi:role="line"
+         id="tspan1-0"
+         style="font-weight:normal;font-size:4.23333px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.159225;stroke-dasharray:none"
+         x="125.75685"
+         y="75.209412">X is everything</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.216563;stroke-linejoin:round;stroke-dasharray:none"
+       x="116.30881"
+       y="51.645756"
+       id="text1-1-8"><tspan
+         sodipodi:role="line"
+         id="tspan1-0-6"
+         style="font-weight:normal;font-size:4.93889px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.216563;stroke-dasharray:none"
+         x="116.30881"
+         y="51.645756">NEP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-weight:bold;font-size:4.93889px;font-family:Arial;-inkscape-font-specification:'Arial, Bold';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.216563;stroke-linejoin:round;stroke-dasharray:none"
+       x="135.62572"
+       y="51.645756"
+       id="text1-1-8-8"><tspan
+         sodipodi:role="line"
+         id="tspan1-0-6-4"
+         style="font-weight:normal;font-size:4.93889px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.216563;stroke-dasharray:none"
+         x="135.62572"
+         y="51.645756">v0.1</tspan></text>
+  </g>
+</svg>
