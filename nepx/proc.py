@@ -13,7 +13,16 @@ def proc_data(data, atom=None) -> dict[str, np.ndarray]:
 
     if data['data_type'] == "thermo":
         if atom != None:
-            data['Volume'] = data['Lx']*data['Ly']*data['Lz']/1000
+            if 'Lx' in data:
+                volumes = data['Lx']*data['Ly']*data['Lz']
+            elif 'ax' in data:
+                cm = np.array([
+                    [data['ax'], data['ay'], data['az']],
+                    [data['bx'], data['by'], data['bz']],
+                    [data['cx'], data['cy'], data['cz']] ])
+                cm = np.transpose(cm, (2, 0, 1))
+                volumes = np.abs(np.einsum('ij,ij->i',cm[:, 0],np.cross(cm[:, 1], cm[:, 2])))
+            data['Volume'] = volumes / 1000
             data['Masses'] = np.array([np.sum(atom.get_masses())] * len(data['Volume']))
             data['Density'] = get_dens(data['Volume'], data['Masses'])
         data['Total_Energy'] = data['U'] + data['K']
